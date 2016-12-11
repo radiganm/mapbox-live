@@ -7,6 +7,10 @@
   d=${0%/*}; f=${0##*/}; n=${f%.*}; e=${f##*.}
 
   name=radigan/mapbox-live
-  docker run -P -it $name $*
+  docker run \
+    -p 8000:8000 \
+    -p 8888:8888 \
+    -e LIVE__MAPBOX_API_KEY=${LIVE__MAPBOX_API_KEY} \
+    -it $name $*
 
 ## *EOF*

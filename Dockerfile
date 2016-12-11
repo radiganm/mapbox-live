@@ -30,14 +30,18 @@
 
   RUN mkdir -p /opt/srv/bin
   ADD srv_ctl /opt/srv/bin/srv_ctl
+  RUN chmod 775 /opt/srv/bin/srv_ctl
 
   RUN mkdir -p /opt/srv/mapbox
   COPY mapbox /opt/srv/mapbox
+  RUN chmod 775 /opt/srv/mapbox/mapbox-start.sh
   RUN (cd /opt/srv/mapbox; npm install)
   RUN (cd /opt/srv/mapbox; npm install app)
   RUN (cd /opt/srv/mapbox; npm install express --save)
   RUN (cd /opt/srv/mapbox; npm install restify --save)
   RUN (cd /opt/srv/mapbox; npm install socket.io --save)
+  RUN (cd /opt/srv/mapbox; npm install consolidate --save)
+  RUN (cd /opt/srv/mapbox; npm install swig --save)
   RUN ln -fs /usr/bin/nodejs /usr/bin/node
 
   EXPOSE 8000

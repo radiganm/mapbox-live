@@ -4,6 +4,6 @@
 
   export NODE_PATH=/opt/srv/mapbox/node_modules
   export PATH=$PATH:/usr/local/bin
-  (cd /opt/srv/mapbox; nodejs server.js &)
+  (cd /opt/srv/mapbox; nodejs server.js)
 
 ## *EOF*

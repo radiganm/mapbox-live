@@ -60,11 +60,17 @@ EOT
       ls)
         /bin/ls $*
         ;;
+      cat)
+        /bin/cat $*
+        ;;
+      ps)
+        /bin/ps $*
+        ;;
       exec)
         exec $*
         ;;
       *)
-        die $S__NO_SUCH_COMMAND "invalid utility: $cmd, must be one of ( find | shell | exec | ls )"
+        die $S__NO_SUCH_COMMAND "invalid utility: $cmd, must be one of ( find | shell | exec | ls | cat | ps )"
         ;;
     esac
   }
@@ -95,7 +101,7 @@ EOT
   live-start()
   {
     (cd /opt/$APP/mapbox; ./mapbox-start.sh)
-    setpid $APP $!
+   #setpid $APP $!
   }
 
   live-stop()
