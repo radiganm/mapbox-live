@@ -24,6 +24,8 @@
 			  stop        - stop application
 			  apache2ctl  - run Apache control
 			  nginx       - run Nginx control
+			  mongo*      - run MongoDB subcommands
+			  util*       - run utility subcommands
 EOT
     exit ${S__SUCCESS}
   }
@@ -76,6 +78,55 @@ EOT
     esac
   }
 
+  mongo()
+  {
+    cmd=$1; shift
+    case $cmd in
+      mongo)
+        /usr/bin/mongo $*
+        ;;
+      mongod)
+        /usr/bin/mongod $*
+        ;;
+      mongodump)
+        /usr/bin/mongodump $*
+        ;;
+      mongoexport)
+        /usr/bin/mongoexport $*
+        ;;
+      mongofiles)
+        /usr/bin/mongofiles $*
+        ;;
+      mongoimport)
+        /usr/bin/mongoimport $*
+        ;;
+      mongooplog)
+        /usr/bin/mongooplog $*
+        ;;
+      mongoperf)
+        /usr/bin/mongoperf $*
+        ;;
+      mongorestore)
+        /usr/bin/mongorestore $*
+        ;;
+      mongos)
+        /usr/bin/mongos $*
+        ;;
+      mongosniff)
+        /usr/bin/mongosniff $*
+        ;;
+      mongostat)
+        /usr/bin/mongostat $*
+        ;;
+      mongotop)
+        /usr/bin/mongotop $*
+        ;;
+      *)
+        die $S__NO_SUCH_COMMAND "invalid mongo command: $cmd"
+        ;;
+    esac
+  }
+
   setpid()
   {
     app=$1; shift
@@ -103,7 +154,7 @@ EOT
   {
     cd /opt/srv/mapbox; nodejs server.js &
     setpid mapbox1 $!
-    cd /opt/srv/geojson.io; serve -p 8001 &
+    cd /opt/srv/geojson.io; serve -p 8002 &
     setpid mapbox2 $!
     /etc/init.d/nginx restart
     wait
@@ -163,6 +214,9 @@ EOT
       ;;
     util)
       util $*
+      ;;
+    mongo*)
+      mongo $*
       ;;
     *)
       die $S__NO_SUCH_COMMAND "invalid command: $cmd"

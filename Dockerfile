@@ -17,6 +17,7 @@
       apt-get install -y             \
         curl                         \
         git                          \
+        mongodb                      \
         nginx                        \
         g++                          \
         nodejs                       \
@@ -57,6 +58,7 @@
   EXPOSE 80
   EXPOSE 8000
   EXPOSE 8001
+  EXPOSE 8002
   EXPOSE 8888
   ENTRYPOINT ["/opt/srv/bin/srv_ctl"]
 

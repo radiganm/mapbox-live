@@ -4,7 +4,7 @@
 ## Copyright 2016 Mac Radigan
 ## All Rights Reserved
 
-.PHONY: build clean update
+.PHONY: build clean update start mongo cmd
 
 name = radigan/mapbox-live
 
@@ -16,5 +16,14 @@ clean:
 
 update: 
 	./update.sh
+
+start: 
+	./cmd start
+
+mongo: 
+	./cmd mongo mongo
+
+cmd: 
+	./cmd $(ARGS)
 
 ## *EOF*
