@@ -152,6 +152,8 @@ EOT
 
   live-start()
   {
+    /usr/bin/mongod &
+    setpid mapbox0 $!
     cd /opt/srv/mapbox; nodejs server.js &
     setpid mapbox1 $!
     cd /opt/srv/geojson.io; serve -p 8002 &
@@ -163,8 +165,9 @@ EOT
   live-stop()
   {
     /etc/init.d/nginx stop
-    unsetpid mapbox1
     unsetpid mapbox2
+    unsetpid mapbox1
+    unsetpid mapbox0
   }
 
   live()

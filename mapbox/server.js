@@ -20,7 +20,7 @@
   rest.get('/api/keys/:id', respond);
   rest.head('/api/keys/:id', respond);
 
-  rest.listen(process.env.LIVE__REST_PORT || 8888, function() {
+  rest.listen(process.env.LIVE__REST_PORT || 8001, function() {
     console.log('%s listening at %s', rest.name, rest.url);
   });
 

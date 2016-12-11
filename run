@@ -1,5 +1,5 @@
 #!/bin/bash
-## cmd
+## run
 ##
 ## Copyright 2016 Mac Radigan
 ## All Rights Reserved
@@ -8,7 +8,13 @@
   root=$(readlink -f $d)
 
   name=radigan/mapbox-live
-  docker run     \
+  docker run       \
+    -p 80:80       \
+    -p 8000:8000   \
+    -p 8001:8001   \
+    -p 8002:8002   \
+    -p 8888:8888   \
+    -p 27107:27107 \
     -v ${root}/data/mongodb:/data/db \
     -v ${root}/logs/mongodb:/var/log/mongodb \
     -e LIVE__MAPBOX_API_KEY=${LIVE__MAPBOX_API_KEY} \

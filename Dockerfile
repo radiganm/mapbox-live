@@ -60,6 +60,7 @@
   EXPOSE 8001
   EXPOSE 8002
   EXPOSE 8888
+  EXPOSE 27017
   ENTRYPOINT ["/opt/srv/bin/srv_ctl"]
 
 ## *EOF*
