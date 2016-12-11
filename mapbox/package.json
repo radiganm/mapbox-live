@@ -1,0 +1,19 @@
+{
+  "name": "mapbox-live",
+  "version": "0.1",
+  "author": "Mac Radigan",
+  "description": "Mapbox Live Server",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/radiganm/mapbox-live"
+  },
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "express": "^4.14.0",
+    "restify": "^1.1.4",
+    "socket.io": "*"
+  }
+}

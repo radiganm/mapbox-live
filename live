@@ -1,0 +1,12 @@
+#!/bin/bash
+## live
+##
+## Copyright 2016 Mac Radigan
+## All Rights Reserved
+
+  d=${0%/*}; f=${0##*/}; n=${f%.*}; e=${f##*.}
+
+  name=radigan/mapbox-live
+  docker run -P -it $name $*
+
+## *EOF*
