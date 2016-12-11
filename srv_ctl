@@ -101,13 +101,12 @@ EOT
 
   live-start()
   {
-    (cd /opt/srv/mapbox; nodejs server.js &)
+    cd /opt/srv/mapbox; nodejs server.js &
     setpid mapbox1 $!
-    (cd /opt/srv/geojson.io; serve -p 8001 &)
+    cd /opt/srv/geojson.io; serve -p 8001 &
     setpid mapbox2 $!
     /etc/init.d/nginx restart
-    echo "[press enter to shutdown]"
-    read
+    wait
   }
 
   live-stop()
@@ -141,15 +140,12 @@ EOT
 
   sigint()
   {
-    (>&2 echo "TODO:  abort code here")
-    #stop-all
-    #for job in $(jobs -p)
-    #do
-    #  wait $job || warn job "could not wait on job: $job"
-    #done
+    (>&2 echo "shutting down")
+    /etc/init.d/nginx stop
+    kill 0
   }
 
-# trap sigint SIGINT
+  trap sigint SIGINT
 
   cmd=$1; shift
   case $cmd in
