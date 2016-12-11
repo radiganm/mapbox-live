@@ -4,7 +4,7 @@
 ## Copyright 2016 Mac Radigan
 ## All Rights Reserved
 
-.PHONY: build
+.PHONY: build clean update
 
 name = radigan/mapbox-live
 
@@ -13,5 +13,8 @@ build:
 
 clean: 
 	docker rmi -f $(name)
+
+update: 
+	./update.sh
 
 ## *EOF*

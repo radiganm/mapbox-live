@@ -1,0 +1,3 @@
+[submodule "geojson.io"]
+	path = geojson.io
+	url = git@github.com:radiganm/geojson.io.git

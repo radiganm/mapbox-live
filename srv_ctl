@@ -23,6 +23,7 @@
 			  start       - start application
 			  stop        - stop application
 			  apache2ctl  - run Apache control
+			  nginx       - run Nginx control
 EOT
     exit ${S__SUCCESS}
   }
@@ -100,13 +101,20 @@ EOT
 
   live-start()
   {
-    (cd /opt/$APP/mapbox; ./mapbox-start.sh)
-   #setpid $APP $!
+    (cd /opt/srv/mapbox; nodejs server.js &)
+    setpid mapbox1 $!
+    (cd /opt/srv/geojson.io; serve -p 8001 &)
+    setpid mapbox2 $!
+    /etc/init.d/nginx restart
+    echo "[press enter to shutdown]"
+    read
   }
 
   live-stop()
   {
-    unsetpid $APP
+    /etc/init.d/nginx stop
+    unsetpid mapbox1
+    unsetpid mapbox2
   }
 
   live()
@@ -145,6 +153,9 @@ EOT
 
   cmd=$1; shift
   case $cmd in
+    nginx)
+      /etc/init.d/nginx $*
+      ;;
     apache2ctl)
       /usr/sbin/apache2ctl $*
       ;;

@@ -17,8 +17,8 @@
     res.send('id: ' + req.params.id);
   }
 
-  rest.get('/test/:id', respond);
-  rest.head('/test/:id', respond);
+  rest.get('/api/test/:id', respond);
+  rest.head('/api/test/:id', respond);
 
   rest.listen(process.env.LIVE__REST_PORT || 8888, function() {
     console.log('%s listening at %s', rest.name, rest.url);
