@@ -150,14 +150,26 @@ EOT
     fi
   }
 
+  bootstrap()
+  {
+    rm -f /data/db/mongod.lock
+   #/usr/bin/mongod --repair
+    /usr/bin/mongoimport -d local -c criteria --file /data/bootstrap/init.geojson
+  }
+
   live-start()
   {
-    /usr/bin/mongod &
-    setpid mapbox0 $!
-    cd /opt/srv/mapbox; nodejs server.js &
-    setpid mapbox1 $!
+   #/usr/bin/mongod --fork --config /etc/mongodb.conf --dbpath /data/db --repairpath /data/db/db0 --logpath /data/logs/mongodb/mongodb.log
+   #/usr/bin/mongod --config /etc/mongodb.conf --dbpath /data/db --repairpath /data/db/db0 --logpath /data/logs/mongodb/mongodb.log &
+   #/usr/bin/mongod --config /etc/mongodb.conf --dbpath /data/db --repairpath /data/db/db0 --logpath /data/logs/mongodb/mongodb.log &
+    /usr/bin/mongod --fork --config /etc/mongodb.conf --dbpath /data/db --logpath /data/logs/mongodb/mongodb.log
+    setpid site0 $!
+    sleep 2
+    bootstrap
+    cd /opt/srv/site; nodejs server.js &
+    setpid site1 $!
     cd /opt/srv/geojson.io; serve -p 8002 &
-    setpid mapbox2 $!
+    setpid site2 $!
     /etc/init.d/nginx restart
     wait
   }
@@ -165,9 +177,9 @@ EOT
   live-stop()
   {
     /etc/init.d/nginx stop
-    unsetpid mapbox2
-    unsetpid mapbox1
-    unsetpid mapbox0
+    unsetpid site2
+    unsetpid site1
+    unsetpid site0
   }
 
   live()

@@ -8,6 +8,9 @@
       cons = require('consolidate'),
       app = express(),
       http = require('http'),
+      mongoose = require('mongoose'),
+      db = mongoose.connect('mongodb://127.0.0.1/local', {server: {auto_reconnect: true}}),
+      Schema = mongoose.Schema,
       server = http.createServer(app),
       io = require('socket.io').listen(server);
 
@@ -19,6 +22,12 @@
 
   rest.get('/api/keys/:id', respond);
   rest.head('/api/keys/:id', respond);
+  rest.head('/api/show', function(req, res) {
+    Criteria.find(function(err, criteria, fres) {
+      if(err) return res.sendStatus(500);
+      res.send(criteria);
+    });
+  });
 
   rest.listen(process.env.LIVE__REST_PORT || 8001, function() {
     console.log('%s listening at %s', rest.name, rest.url);
@@ -30,10 +39,17 @@
 
   var MAPBOX_API_KEY = process.env.LIVE__MAPBOX_API_KEY;
 
+  var criteriaSchema = new Schema({}, {strict: false});
+  var Criteria = db.model('Criteria', criteriaSchema);
+
   app.get('/', function(req, res) {
-    res.render('index', {
-      title: 'index',
-      MAPBOX_API_KEY: MAPBOX_API_KEY
+    Criteria.find(function(err, criteria, fres) {
+      if(err) return res.sendStatus(500);
+      res.render('index', {
+        title: 'index',
+        criteria: criteria,
+        MAPBOX_API_KEY: MAPBOX_API_KEY
+      });
     });
   });
 

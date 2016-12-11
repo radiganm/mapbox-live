@@ -15,8 +15,7 @@
     -p 8002:8002   \
     -p 8888:8888   \
     -p 27107:27107 \
-    -v ${root}/data/mongodb:/data/db \
-    -v ${root}/logs/mongodb:/var/log/mongodb \
+    -v ${root}/data:/data \
     -e LIVE__MAPBOX_API_KEY=${LIVE__MAPBOX_API_KEY} \
     -it $name $*
 

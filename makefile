@@ -4,7 +4,7 @@
 ## Copyright 2016 Mac Radigan
 ## All Rights Reserved
 
-.PHONY: build clean update start mongo cmd run
+.PHONY: build clobber clean update start mongo cmd run
 
 name = radigan/mapbox-live
 
@@ -13,6 +13,13 @@ build:
 
 clean: 
 	docker rmi -f $(name)
+
+clobber: clean
+	sudo rm -Rf ./data/mongodb/_tmp
+	sudo rm -Rf ./data/mongodb/journal
+	sudo rm -f ./data/mongodb/mongod.lock
+	sudo rm -f ./data/mongodb/local.0
+	sudo rm -f ./data/mongodb/local.ns
 
 update: 
 	./update.sh
