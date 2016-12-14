@@ -11,8 +11,8 @@
   }
 
   server {
-    listen 0.0.0.0:80;
-    server_name localhost galois omni
+    listen 80 default_server;
+    server_name _;
     access_log /var/log/nginx/site.log;
     location / {
       proxy_set_header X-Real-IP $remote_addr;

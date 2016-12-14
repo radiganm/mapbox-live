@@ -166,9 +166,9 @@ EOT
     setpid site0 $!
     sleep 2
     bootstrap
-    cd /opt/srv/site; nodejs server.js &
-    setpid site1 $!
     cd /opt/srv/geojson.io; serve -p 8002 &
+    setpid site1 $!
+    cd /opt/srv/site; nodejs server.js &
     setpid site2 $!
     /etc/init.d/nginx restart
     wait

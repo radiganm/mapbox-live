@@ -36,6 +36,7 @@
   app.engine('html', cons.swig);
   app.set('view engine', 'html');
   app.set('views', __dirname + '/views');
+  app.use(express.static(__dirname + '/static'));
 
   var MAPBOX_API_KEY = process.env.LIVE__MAPBOX_API_KEY;
 
@@ -43,19 +44,35 @@
   var Criteria = db.model('Criteria', criteriaSchema);
 
   app.get('/', function(req, res) {
-    Criteria.find(function(err, criteria, fres) {
-      if(err) return res.sendStatus(500);
+//  Criteria.find(function(err, criteria, fres) {
+//    if(err) return res.sendStatus(500);
       res.render('index', {
         title: 'index',
-        criteria: criteria,
+        editor: 'http://' + req.get('host').split(':')[0] + ':8002',
+//      criteria: criteria,
         MAPBOX_API_KEY: MAPBOX_API_KEY
       });
-    });
+//  });
   });
 
   app.get('/map', function(req, res) {
-    res.render('map', {
+    res.render('map.html', {
       title: 'map',
+      MAPBOX_API_KEY: MAPBOX_API_KEY
+    });
+  });
+
+  app.get('/view', function(req, res) {
+    res.render('map.html', {
+      title: 'map',
+      MAPBOX_API_KEY: MAPBOX_API_KEY
+    });
+  });
+
+  app.get('/list', function(req, res) {
+    res.render('list.html', {
+      title: 'list',
+      editor: 'http://' + req.get('host').split(':')[0] + ':8002',
       MAPBOX_API_KEY: MAPBOX_API_KEY
     });
   });
